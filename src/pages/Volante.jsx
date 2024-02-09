@@ -75,7 +75,7 @@ export const Volante = () => {
 
     const enviarPedido = () => {
       const mensajePedido = generarMensajePedido();
-      const numeroWhatsApp = '5510935095';  // Reemplaza con el número de WhatsApp deseado
+      const numeroWhatsApp = '5518369947';  // Reemplaza con el número de WhatsApp deseado
       const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensajePedido)}`;
       
       window.open(urlWhatsApp, '_blank');
