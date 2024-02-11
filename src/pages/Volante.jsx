@@ -86,15 +86,15 @@ export const Volante = () => {
       }
 
     const enviarPedido = () => {
-      if(data.nombre === ''){
+      if(nombre === ''){
         setMessageAlert('*Necesitas colocar tu nombre')
-      }else if(data.calle === ''){
+      }else if(calle === ''){
         setMessageAlert('*Necesitas colocar tu calle y numero')
-      }else if(data.colonia === ''){
+      }else if(colonia === ''){
         setMessageAlert('*Necesitas colocar tu colonia')
-      }else if(data.municipio === ''){
+      }else if(municipio === ''){
         setMessageAlert('*Necesitas colocar el Municipio')
-      }else if(data.cp === ''){
+      }else if(codigoPostal === ''){
         setMessageAlert('*Necesitas colocar tu Codigo Postal')
       }else{
 
