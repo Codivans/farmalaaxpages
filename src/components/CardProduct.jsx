@@ -16,7 +16,18 @@ export const CardProduct = ({product, cart, addToCart, removeFromCart}) => {
         </div>
         <div className="informacion">
             <h2>{product.nombre}</h2>
-            <p className="precio-nuevo">$ {product.precio.toFixed(2)}</p>
+            {
+                product.oferta === 'NULL' ? <p className='precio-anterior'></p> : (
+                    <p className="precio-anterior">$ {product.precio.toFixed(2)}</p>
+                )
+            }
+            
+            {
+                product.oferta === 'NULL' ? <p className='precio-nuevo'>$ {product.precio.toFixed(2)}</p> : (
+                    <p className="precio-nuevo">$ {product.oferta.toFixed(2)}</p>
+                )
+            }
+            
             {
                 agregado ? 
                 <div className='content-buttons'>
