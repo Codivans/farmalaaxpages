@@ -127,6 +127,7 @@ header.header-volante .btn-cart span{
    font-size: 12px;
    color: #979797;
    line-height: 10px;
+   height: 12px;
 }
 
 .card .informacion .precio-nuevo{
@@ -136,6 +137,7 @@ header.header-volante .btn-cart span{
    font-size: 14px;
    line-height: 10px;
    font-weight: 700;
+   height: 12px;
 }
 .card button{
    background: #1976d2;
@@ -328,7 +330,7 @@ header.header-volante .btn-cart span{
    text-align: center;
 }
 
-.botones-cart button.btn-delete{
+.botones-cart > button.btn-delete-cart{
    background-color: white;
    border: 0px solid transparent;
    color: #979797;
@@ -351,6 +353,10 @@ header.header-volante .btn-cart span{
    width: 90%;
    border-radius: 4px;
    margin-block: 20px;
+}
+.message-alert{
+   color: #e20808;
+   font-size: 14px;
 }
 
 .close {
@@ -493,8 +499,7 @@ header.header-volante .btn-cart span{
  }
 
 
-
-.header-admin{
+ .header-admin{
    background-color: #1463b1;
    color: white;
    padding: 0px;
