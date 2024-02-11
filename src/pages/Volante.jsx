@@ -7,22 +7,34 @@ import { Link } from 'react-router-dom';
 import useObtenerCatalogo from '../hooks/useObtenerCatalogo';
 import imglogo from '../assets/img/farmalaaxwhite.png'
 
+
 export const Volante = () => {
     const [cart, setCart] = useState([]);
     const [show, setShow] = useState(false);
     const [showProducts, setShowProducts] = useState(true);
-    const [data, setData] = useState({
-      nombre: '',
-      calle: '',
-      colonia: '',
-      municipio: '',
-      cp: ''
-    })
     const [filtro, setFiltro] = useState('')
     const catalogo = useObtenerCatalogo();
     const [openMenu, setOpenMenu] = useState(false);
     const [showButton, setShowButton] = useState(false);
-    const [messageAlert, setMessageAlert] = useState('')
+    const [messageAlert, setMessageAlert] = useState('');
+    const [nombre, setNombre] = useState('');
+    const [calle, setCalle] = useState('');
+    const [colonia, setColonia] = useState('');
+    const [municipio, setMunicipio] = useState('');
+    const [codigoPostal, setCodigoPostal] = useState('');
+
+    const imagenDefault = (e) =>{
+      e.target.src =  'https://farmaprontoneza.com/image/farmalaax.jpg' 
+    }
+
+
+    const cleanData = () => {
+      setNombre('');
+      setCalle('');
+      setColonia('');
+      setMunicipio('');
+      setCodigoPostal('');
+    }
   
     const addToCart = (product) => {
         const existingCartItem = cart.find((item) => item.codigo === product.codigo);
@@ -89,33 +101,28 @@ export const Volante = () => {
         const mensajePedido = generarMensajePedido();
         const numeroWhatsApp = '5518369947';  // Reemplaza con el número de WhatsApp deseado
         const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensajePedido)}`;
-        
         window.open(urlWhatsApp, '_blank');
         setCart([]);
         setShow(false);
         setShowProducts(false);
-        setData({
-          nombre: '',
-          calle: '',
-          colonia: '',
-          municipio: '',
-          cp: ''
-        });
-
+        cleanData();
       }
     }
 
     const generarMensajePedido = () => {
         let mensaje = `
-          Hola me interesaron estos productos, ¿me puedes tomar mi pedido por favor?\n\n
-          *Nombre:* ${data.nombre}\n\n
-          Mi Dirección:
-          *Calle:* ${data.calle}, *Colonia:* ${data.colonia}, *Municipio o Delegación:* ${data.municipio}, *Código Postal:* ${data.cp}\n\n
-          *Detalle de mi pedido:*\n
+          \nHola me interesaron estos productos, ¿me puedes tomar mi pedido por favor?\n
+          \n*Nombre:* ${nombre}
+          \nMi Dirección:
+          \n*Calle:* ${calle}
+          \n*Colonia:* ${colonia}
+          \n*Municipio o Delegación:* ${municipio}
+          \n*Código Postal:* ${codigoPostal}
+          \n*Detalle de mi pedido:*
         `;
 
         cart.forEach(item => {
-        mensaje += `${item.quantity} ${item.quantity > 1 ? "Pzs" : "Pza"} ${item.codigo} \n ${item.nombre}\n Precio: $${item.precio.toFixed(2)}\n\n`;
+        mensaje += `\n${item.quantity} ${item.quantity > 1 ? "Pzs - " : "Pza - "} ${item.codigo} \n ${item.nombre}\n Precio: $ ${item.oferta != 'NULL' ? item.oferta.toFixed(2) : item.precio.toFixed(2)}\n\n`;
         });
 
         const importeTotal = cart.reduce((total, item) => total + (item.oferta != 'NULL' ? item.oferta : item.precio) * item.quantity, 0);
@@ -124,11 +131,25 @@ export const Volante = () => {
         return mensaje;
     }
 
+    const handleChangeNombre = (event) => {
+      setNombre(event.target.value)
+    }
 
-    const handleChange = (event) => {
-        const { name, value } = event.target
-        setData({ ...data, [name]: value })
-    };
+    const handleChangeCalle = (event) => {
+      setCalle(event.target.value)
+    }
+
+    const handleChangeColonia = (event) => {
+      setColonia(event.target.value)
+    }
+
+    const handleChangeMunicipio = (event) => {
+      setMunicipio(event.target.value)
+    }
+
+    const handleChangeCodigoPostal = (event) => {
+      setCodigoPostal(event.target.value)
+    }
 
     const catalogoVolante = catalogo.length > 0 ? catalogo[0].catalogo : []
 
@@ -234,7 +255,7 @@ export const Volante = () => {
                         return(
                           <div className="product-cart">
                               <div className="img-product-cart">
-                                  <img src={'https://farmaprontoneza.com/image/'+ parseInt(item.codigo) + '.jpg'} />
+                                  <img  loading="lazy" onError={imagenDefault} src={'https://farmaprontoneza.com/image/'+ parseInt(item.codigo) + '.jpg'} />
                               </div>
                               <div className="info-product">
                                   <h4>{item.nombre}</h4>
@@ -267,23 +288,23 @@ export const Volante = () => {
                   <div className={showProducts ? 'content-addres' : 'content-addres-show'}>
                     <div className='control-inputs'>
                       <label>Nombre: </label>
-                      <input type="text" placeholder='Escribe tu nombre' name="nombre" onChange={handleChange}/>
+                      <input type="text" placeholder='Escribe tu nombre' name="nombre" onChange={handleChangeNombre}/>
                     </div>
                     <div className='control-inputs'>
                       <label>Calle y numero: </label>
-                      <input type="text" placeholder='Ej. Horacio Nelson #3' name="calle" onChange={handleChange}/>
+                      <input type="text" placeholder='Ej. Horacio Nelson #3' name="calle" onChange={handleChangeCalle}/>
                     </div>
                     <div className='control-inputs'>
                       <label>Colonia: </label>
-                      <input type="text" placeholder='Ej. Moderna' name="colonia" onChange={handleChange}/>
+                      <input type="text" placeholder='Ej. Moderna' name="colonia" onChange={handleChangeColonia}/>
                     </div>
                     <div className='control-inputs'>
                       <label>Municipio o  Delegacion: </label>
-                      <input type="text" placeholder='Benito Juarez' name="municipio" onChange={handleChange}/>
+                      <input type="text" placeholder='Benito Juarez' name="municipio" onChange={handleChangeMunicipio}/>
                     </div>
                     <div className='control-inputs'>
                       <label>Codigo Postal: </label>
-                      <input type="text" placeholder='03510' name="cp" onChange={handleChange}/>
+                      <input type="text" placeholder='03510' name="cp" onChange={handleChangeCodigoPostal}/>
                     </div>
                     <div class="botones-cart">
                         <p className='message-alert'>{messageAlert}</p>                        
