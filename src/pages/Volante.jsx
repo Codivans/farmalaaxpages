@@ -90,7 +90,7 @@ export const Volante = () => {
         const numeroWhatsApp = '5518369947';  // Reemplaza con el número de WhatsApp deseado
         const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensajePedido)}`;
         
-        // window.open(urlWhatsApp, '_blank');
+        window.open(urlWhatsApp, '_blank');
         setCart([]);
         setShow(false);
         setShowProducts(false);
@@ -122,7 +122,6 @@ export const Volante = () => {
         mensaje += `*Importe Total:* $${importeTotal.toFixed(2)}`;
 
         return mensaje;
-        // vaciarCarrito();
     }
 
 
