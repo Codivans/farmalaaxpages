@@ -22,8 +22,8 @@ export const Volante = () => {
     const catalogo = useObtenerCatalogo();
     const [openMenu, setOpenMenu] = useState(false);
     const [showButton, setShowButton] = useState(false);
+    const [messageAlert, setMessageAlert] = useState('')
   
-
     const addToCart = (product) => {
         const existingCartItem = cart.find((item) => item.codigo === product.codigo);
     
@@ -64,7 +64,7 @@ export const Volante = () => {
 
       const countCarrito = cart.reduce((acc,val) => acc + val.quantity,0)
 
-      const importe = cart.reduce((acc, val) => acc + val.quantity * val.precio,0)
+      const importe = cart.reduce((acc, val) => acc + val.quantity * (val.oferta != 'NULL' ? val.oferta : val.precio),0)
 
       const showCart = () => {
         setShow(!show)
@@ -74,21 +74,35 @@ export const Volante = () => {
       }
 
     const enviarPedido = () => {
-      const mensajePedido = generarMensajePedido();
-      const numeroWhatsApp = '5518369947';  // Reemplaza con el número de WhatsApp deseado
-      const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensajePedido)}`;
-      
-      window.open(urlWhatsApp, '_blank');
-      setCart([]);
-      setShow(false);
-      setShowProducts(false);
-      setData({
-        nombre: '',
-        calle: '',
-        colonia: '',
-        municipio: '',
-        cp: ''
-      });
+      if(data.nombre === ''){
+        setMessageAlert('*Necesitas colocar tu nombre')
+      }else if(data.calle === ''){
+        setMessageAlert('*Necesitas colocar tu calle y numero')
+      }else if(data.colonia === ''){
+        setMessageAlert('*Necesitas colocar tu colonia')
+      }else if(data.municipio === ''){
+        setMessageAlert('*Necesitas colocar el Municipio')
+      }else if(data.cp === ''){
+        setMessageAlert('*Necesitas colocar tu Codigo Postal')
+      }else{
+
+        const mensajePedido = generarMensajePedido();
+        const numeroWhatsApp = '5518369947';  // Reemplaza con el número de WhatsApp deseado
+        const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensajePedido)}`;
+        
+        // window.open(urlWhatsApp, '_blank');
+        setCart([]);
+        setShow(false);
+        setShowProducts(false);
+        setData({
+          nombre: '',
+          calle: '',
+          colonia: '',
+          municipio: '',
+          cp: ''
+        });
+
+      }
     }
 
     const generarMensajePedido = () => {
@@ -104,7 +118,7 @@ export const Volante = () => {
         mensaje += `${item.quantity} ${item.quantity > 1 ? "Pzs" : "Pza"} ${item.codigo} \n ${item.nombre}\n Precio: $${item.precio.toFixed(2)}\n\n`;
         });
 
-        const importeTotal = cart.reduce((total, item) => total + item.precio * item.quantity, 0);
+        const importeTotal = cart.reduce((total, item) => total + (item.oferta != 'NULL' ? item.oferta : item.precio) * item.quantity, 0);
         mensaje += `*Importe Total:* $${importeTotal.toFixed(2)}`;
 
         return mensaje;
@@ -152,10 +166,6 @@ export const Volante = () => {
         window.removeEventListener('scroll', handleScroll);
       };
     }, []);
-
-    console.log(filtro)
-
-
 
   return (
     <>
@@ -229,8 +239,8 @@ export const Volante = () => {
                               </div>
                               <div className="info-product">
                                   <h4>{item.nombre}</h4>
-                                  <p>{item.quantity} {item.quantity > 1 ? 'Pzas': 'Pza'} x $ {item.precio.toFixed(2)}</p>
-                                  <p>$ { (item.precio * item.quantity).toFixed(2)}</p>
+                                  <p>{item.quantity} {item.quantity > 1 ? 'Pzas': 'Pza'} x $ {item.oferta != 'NULL' ? item.oferta.toFixed(2) :  item.precio.toFixed(2)}</p>
+                                  <p>$ { ((item.oferta != 'NULL' ? item.oferta : item.precio) * item.quantity).toFixed(2)}</p>
                               </div>
                               <div className='content-delete'>
                                 <button onClick={() => removeFromCart(item)}>
@@ -244,7 +254,7 @@ export const Volante = () => {
                   </div>
 
                   <div className="importeTotal">
-                    <Link to="#" class="btn-delete" onClick={() => setCart([])}>Vaciar carrito</Link>
+                    <Link to="#" class="btn-delete-cart" onClick={() => setCart([])}>Vaciar carrito</Link>
                     <p>Total: $ {importe.toFixed(2)}</p>
                   </div>
 
@@ -277,7 +287,7 @@ export const Volante = () => {
                       <input type="text" placeholder='03510' name="cp" onChange={handleChange}/>
                     </div>
                     <div class="botones-cart">
-                        
+                        <p className='message-alert'>{messageAlert}</p>                        
                         <button class="btn-send" onClick={enviarPedido}>Enviar pedido por WhatsApp</button>
                     </div>
                   </div>
