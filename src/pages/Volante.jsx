@@ -220,12 +220,29 @@ export const Volante = () => {
                 <li><Link to="#" onClick={() => handleClick('ETICO')}>Etico</Link></li>
                 <li><Link to="#" onClick={() => handleClick('OTC')}>Otc</Link></li>
                 <li><Link to="#" onClick={() => handleClick('GENERICOS')}>Genericos</Link></li>
+                <li><Link to="#" onClick={() => handleClick('DERMOCOSMETICOS')}>Dermocosmetico</Link></li>
 
-                <label>Medicamentos</label>
+                <label>Perfumeria</label>
                 <li><Link to="#" onClick={() => handleClick('BEBES')}>Bebes</Link></li>
-                <li><Link to="#" onClick={() => handleClick('DERMATOLOGIA')}>Dermatologia</Link></li>
+                <li><Link to="#" onClick={() => handleClick('DESODORANTES')}>Desodorantes</Link></li>
                 <li><Link to="#" onClick={() => handleClick('USO DIARIO')}>Uso diario</Link></li>
+                <li><Link to="#" onClick={() => handleClick('CREMAS')}>Cremas</Link></li>
+                <li><Link to="#" onClick={() => handleClick('SHAMPOO')}>Shampoo</Link></li>
+                <li><Link to="#" onClick={() => handleClick('ANTIMICOTICOS')}>Antimicoticos</Link></li>
+                <li><Link to="#" onClick={() => handleClick('TOALLAS FEMENINAS')}>Cuidado femenino</Link></li>
 
+                <label>Incontinencia</label>
+                <li><Link to="#" onClick={() => handleClick('INCONTINENCIA')}>Incontinencia</Link></li>
+
+                <label>Diabetes</label>
+                <li><Link to="#" onClick={() => handleClick('DIABETICOS')}>Equipo de medición</Link></li>
+
+                <label>Material de Curación</label>
+                <li><Link to="#" onClick={() => handleClick('MATERIAL DE CURACION')}>Incontinencia</Link></li>
+
+                <label>Salud Sexual</label>
+                <li><Link to="#" onClick={() => handleClick('CONDONES')}>Condones</Link></li>
+                  
               </ul>
             </nav>
         </div>
