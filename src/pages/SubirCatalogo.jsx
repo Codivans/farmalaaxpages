@@ -70,17 +70,19 @@ export const SubirCatalogo = () => {
                                 <th>Codigo</th>
                                 <th>Nombre</th>
                                 <th>Precio</th>
+                                <th>Oferta</th>
                                 <th>Sustancia</th>
                                 <th>Departamento</th>
                             </thead>
                             <tbody>
                                 {
-                                    catalogo.map(({codigo, nombre, precio, sustancia, departamento}) => {
+                                    catalogo.map(({codigo, nombre, precio, sustancia, oferta, departamento}) => {
                                         return(
                                             <tr key={codigo}>
                                                 <td>{codigo}</td>
                                                 <td>{nombre}</td>
                                                 <td>{precio}</td>
+                                                <td>{oferta}</td>
                                                 <td>{sustancia}</td>
                                                 <td>{departamento}</td>
                                             </tr>
